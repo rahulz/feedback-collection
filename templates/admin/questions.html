@@ -1,0 +1,91 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        Questions
+        <small>Manage questions</small>
+		<button class="btn btn-bg" onclick="$('.modal').fadeIn()">add question</button>
+        
+    </h1>
+    Only one active question will appear on your website, <a ui-sref='settings'> Setup your website to show feedback box</a>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Admin Panel</a></li>
+        <li class="active">Questions</li>
+    </ol>
+</section>
+{% raw %}
+
+<!-- Main content -->
+<section class="content">
+    <div class="example-modal">
+        <div class="modal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true" onclick="$('.modal').fadeOut()">×</span></button>
+                        <h4 class="modal-title">Add a question</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal">
+                            <div class="box-body">
+                                <div class="form-group is-empty">
+                                    <label for="inputEmail3" class="col-sm-2 control-label">Question</label>
+
+                                    <div class="col-sm-10">
+                                        <input ng-model="new_question.title" type="text" class="form-control"
+                                               id="title"
+                                               placeholder="Question">
+                                    </div>
+                                </div>
+                                <div class="form-group is-empty">
+                                    <label for="inputPassword3" class="col-sm-2 control-label">Options</label>
+
+                                    <div class="col-sm-10">
+                                        <input ng-repeat="option in new_question.options" type="text"
+                                               ng-model="option.title"
+                                               class="form-control"
+                                               placeholder="Option">
+
+                                        <button ng-disabled="new_question.options.length>3" ng-click="add_option()"
+                                                class="btn btn-primary">add option
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-offset-2 col-sm-10">
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" ng-model="new_question.active"><span
+                                                    class="checkbox-material"><span
+                                                    class="check"></span></span> Set as active question
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!-- /.box-body -->
+                            <div class="box-footer">
+                                <button type="submit" class="btn btn-default" onclick="$('.modal').fadeOut()">Cancel
+                                </button>
+                                <button ng-click="save_question()" type="submit" class="btn btn-info pull-right">Save
+                                </button>
+                            </div>
+                            <!-- /.box-footer -->
+                        </form>
+                    </div>
+
+                </div>
+                <!-- /.modal-content -->
+            </div>
+            <!-- /.modal-dialog -->
+        </div>
+        <!-- /.modal -->
+    </div>
+
+    <div id="grid" ui-grid="gridOptions" class="grid"></div>
+
+</section>
+
+{% endraw %}
+<!-- /.content -->

@@ -1,0 +1,46 @@
+span.label.tb {
+    cursor: pointer;
+}
+
+.btn-bg{
+background: #2196f3;
+color: white !important;
+}
+
+.btn-bg:hover{
+background: #51a1e8 !important;
+}
+ .btn-bg:focus{
+background: #51a1e8 !important;
+}
+
+.dp {
+   
+    background-color: #6586a0;
+    display: inline-block;
+    border-radius: 60px;
+    
+   
+}
+
+.dp.dp-small {
+     width: 30px;
+    height: 30px;
+    padding: 5px;
+     padding-left: 11px;
+    
+}
+
+.dp.dp-big {
+    width: 70px;
+    height: 70px;
+    padding: 4px;
+    font-size: 40px;
+}
+.dp.dp-medium {
+    width: 42px;
+    height: 42px;
+    padding-left: 14px;
+    font-size: 27px;
+    color: white;
+}

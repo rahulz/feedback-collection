@@ -1,46 +1,50 @@
 {% if not exit is defined %}
-<!DOCTYPE HTML>
-<!--
-	Typify by TEMPLATED
-	templated.co @templatedco
-	Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
--->
-<html>
-<head>
-    <title></title>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <!--[if lte IE 8]><script src="/static/assets/js/ie/html5shiv.js"></script><![endif]-->
-    <link rel="stylesheet" href="/static/assets/css/main.css"/>
-    <!--[if lte IE 9]><link rel="stylesheet" href="/static/assets/css/ie9.css" /><![endif]-->
-</head>
-<body style="width:400px;height:510px; overflow: hidden">
+    <!DOCTYPE HTML>
+    <!--
+        Typify by TEMPLATED
+        templated.co @templatedco
+        Released for free under the Creative Commons Attribution 3.0 license (templated.co/license)
+    -->
+    <html>
+    <head>
+        <title></title>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <!--[if lte IE 8]><script src="/static/assets/js/ie/html5shiv.js"></script><![endif]-->
+        <link rel="stylesheet" href="/static/assets/css/main.css"/>
+        <!--[if lte IE 9]><link rel="stylesheet" href="/static/assets/css/ie9.css" /><![endif]-->
+    </head>
+    <body style="width:400px;height:510px; overflow: hidden">
 
 
 
-<section id="banner" class="ty" style="display:none">
- 
-    <h4><strong>Thank you for your feedback</strong>  </h2>
-    
-    <ul class="actions">
-        <li><a href="javascript:void(0)" class="button special" onclick="parent.postMessage('close', '*');">Close</a></li>
-    </ul>
-    
-</section>
+    <section id="banner" class="ty" style="display:none">
+
+        <h4><strong>Thank you for your feedback</strong>  </h2>
+
+            <ul class="actions">
+                <li><a href="javascript:void(0)" class="button special" onclick="parent.postMessage('close', '*');">Close</a>
+                </li>
+            </ul>
+
+    </section>
 
 
-<section id="banner" class="question">
- 
-    <h4><strong>Hi there, got a moment? We would like to hear from you. Take a second to answer one of our silly question</strong>  </h4> <h2><strong>{{ question.title }}</strong>  </h2>
-    
-    <p></p>
-    <ul class="actions">
-     {% for option in question.options %}
-        <li><a href="javascript:void(0)" class="button special" onclick='post_fb({{option.id}})'>{{ option.title }}</a></li>
-     {% endfor %}
-    </ul>
-    
-</section>
+    <section id="banner" class="question">
+
+        <h4><strong>Hi there, got a moment? We would like to hear from you. Take a second to answer one of our silly
+            question</strong></h4>
+        <h2><strong>{{ question.title }}</strong></h2>
+
+        <p></p>
+        <ul class="actions">
+            {% for option in question.options %}
+                <li><a href="javascript:void(0)" class="button special"
+                       onclick='post_fb({{ option.id }})'>{{ option.title }}</a></li>
+            {% endfor %}
+        </ul>
+
+    </section>
 {% endif %}
 
 
@@ -50,18 +54,18 @@
 <!--[if lte IE 8]><script src="/static/assets/js/ie/respond.min.js"></script><![endif]-->
 <script src="/static/assets/js/main.js"></script>
 <script>
-{% if exit is defined %}
-    parent.postMessage("close", '*');
-{% endif %}
-function post_fb(id){
-$.post("/feedback", {question: {{question.id}}, option: id, token: '{{token}}'})
-  .done(function( data ) {
-    $('.question').hide();
-    $('.ty').show();
-  }).fail(function(data){
-    alert(data);
-  });
-}
+    {% if exit is defined %}
+        parent.postMessage("close", '*');
+    {% endif %}
+    function post_fb(id) {
+        $.post("/feedback", {question: {{question.id}}, option: id, token: '{{token}}'})
+            .done(function (data) {
+                $('.question').hide();
+                $('.ty').show();
+            }).fail(function (data) {
+            alert(data);
+        });
+    }
 </script>
 </body>
 </html>

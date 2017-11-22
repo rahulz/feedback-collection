@@ -13,11 +13,13 @@ class SignupForm(Form):
     ])
     confirm = PasswordField('Repeat Password')
 
+
 class SigninForm(Form):
     email = StringField('Email Address', [validators.DataRequired(), validators.Email()])
     password = PasswordField('New Password', [
         validators.DataRequired(),
     ])
+
 
 class CsrfForm(Form):
     pass

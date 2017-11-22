@@ -21,7 +21,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Material Design -->
     <link rel="stylesheet" href="/static/dist/css/bootstrap-material-design.min.css">
     <link rel="stylesheet" href="/static/dist/css/ripples.min.css">
-   <link rel="stylesheet" href="/static/dist/css/style.css">
+    <link rel="stylesheet" href="/static/dist/css/style.css">
     <link rel="stylesheet" href="/static/dist/css/MaterialAdminLTE.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-grid/4.0.10/ui-grid.css">
 
@@ -184,14 +184,14 @@ desired effect
                         <!-- Menu Toggle Button -->
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <!-- The user image in the navbar-->
-                            <div class="dp dp-small">{{current_user.email[0]}}</div>
+                            <div class="dp dp-small">{{ current_user.email[0] }}</div>
                             <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                            <span class="hidden-xs">{{current_user.email}}</span>
+                            <span class="hidden-xs">{{ current_user.email }}</span>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- The user image in the menu -->
                             <li class="user-header">
-                                <div class="dp dp-big">{{current_user.email[0]}}</div>
+                                <div class="dp dp-big">{{ current_user.email[0] }}</div>
 
                                 <p>
                                     {{ current_user.email }} <br>
@@ -240,10 +240,10 @@ desired effect
             <!-- Sidebar user panel (optional) -->
             <div class="user-panel">
                 <div class="pull-left image">
-                    <div class="dp dp-medium">{{current_user.email[0]}}</div>
+                    <div class="dp dp-medium">{{ current_user.email[0] }}</div>
                 </div>
                 <div class="pull-left info">
-                    <p>{{current_user.email}}</p>
+                    <p>{{ current_user.email }}</p>
                     <!-- Status
                     <a href="#"><i class="fa fa-circle text-success"></i> Online</a -->
                 </div>
@@ -269,7 +269,8 @@ desired effect
                 </li>
                 <li ui-sref-active="active"><a ui-sref="questions"><i class="fa fa-link"></i> <span>Questions</span></a>
                 </li>
-                <li ui-sref-active="active"><a ui-sref="settings"><i class="fa fa-link"></i> <span>Add to your website</span></a>
+                <li ui-sref-active="active"><a ui-sref="settings"><i class="fa fa-link"></i>
+                    <span>Add to your website</span></a>
                 </li>
                 <!--li class="treeview">
                     <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>

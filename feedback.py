@@ -8,9 +8,7 @@ from flask_login import LoginManager, login_user, login_required, current_user, 
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 
-from forms import SignupForm,SigninForm
-
-
+from forms import SignupForm, SigninForm
 
 login_manager = LoginManager()
 date_format = '%d-%m-%Y'
@@ -46,7 +44,6 @@ class User(db.Model):
     def is_anonymous(self):
         return False
 
-        
     def get_id(self):
         return str(self.email)
 
@@ -55,10 +52,9 @@ class User(db.Model):
 
     def as_dict(self):
         return json.dumps({c.name: getattr(self, c.name) for c in self.__table__.columns if c.name != 'password'})
-    
+
     def active_question(self):
         return Question.query.filter_by(user=self.id, is_active=True).first()
-        
 
 
 class Question(db.Model):
@@ -86,9 +82,8 @@ class Question(db.Model):
             'is_active': self.is_active,
             'options': [op.as_dict() for op in Option.query.filter_by(question=self.id)],
             'options_str': ",".join([op.title for op in Option.query.filter_by(question=self.id)]),
-			'reach': self.reach,
+            'reach': self.reach,
             'votes': Vote.query.filter_by(question=self.id).count()
-            
 
         }
 
@@ -135,11 +130,11 @@ class Vote(db.Model):
 
     def __repr__(self):
         return '<Option %r>' % self.title
-    
+
     def as_dict(self):
         return {
             'id': self.id,
-            
+
             'added': datetime.strftime(self.added, date_format),
         }
 
@@ -167,7 +162,6 @@ def admin_questions():
     return render_template("admin/questions.html")
 
 
-
 @app.route('/admin/questions/activate', methods=['POST'])
 @login_required
 def activate_question():
@@ -176,7 +170,7 @@ def activate_question():
     question.set_active()
     return json.dumps([q.as_dict() for q in Question.query.filter_by(user=current_user.id)])
 
-	
+
 @app.route('/admin/questions/delete', methods=['POST'])
 @login_required
 def delete_question():
@@ -186,49 +180,47 @@ def delete_question():
     db.session.commit()
     return json.dumps([q.as_dict() for q in Question.query.filter_by(user=current_user.id)])
 
-	
 
 @app.route('/<string:token>/fmscript.js')
 def fmscript(token):
-    return render_template("fmscript.js", token =  token, domain=urlparse(request.environ['HTTP_REFERER']).netloc)
+    return render_template("fmscript.js", token=token, domain=urlparse(request.environ['HTTP_REFERER']).netloc)
 
-    
+
 @app.route('/feedback', methods=['GET', 'POST', 'UPDATE'])
 def feedback():
-    if request.method =="POST":
+    if request.method == "POST":
         token = request.form['token']
         option = request.form['option']
-        user = User.query.filter_by(token = token).first()
+        user = User.query.filter_by(token=token).first()
         if not user:
             return "token mismatch"
         question = user.active_question()
         vote = Vote(question=question.id, option=option)
         db.session.add(vote)
         db.session.commit()
-        session['q'+str(question.id)] = True
-        return render_template("feedback.html",token=token,question=question.as_dict(), thankyou = 1)
-    elif request.method =="GET":
-        token = request.args.get('t')        
-        domain=urlparse(request.environ['HTTP_REFERER']).netloc
-        user = User.query.filter_by(token = token, domain=domain).first()
+        session['q' + str(question.id)] = True
+        return render_template("feedback.html", token=token, question=question.as_dict(), thankyou=1)
+    elif request.method == "GET":
+        token = request.args.get('t')
+        domain = urlparse(request.environ['HTTP_REFERER']).netloc
+        user = User.query.filter_by(token=token, domain=domain).first()
         if not user:
-            return "token mismatch %s: %s" %(token, domain)
+            return "token mismatch %s: %s" % (token, domain)
         question = user.active_question()
-        if "q"+str(question.id) in session:            
-            return render_template("feedback.html",token=token,question=question.as_dict(), exit = 1)
-        return render_template("feedback.html",token=token,question=question.as_dict())
+        if "q" + str(question.id) in session:
+            return render_template("feedback.html", token=token, question=question.as_dict(), exit=1)
+        return render_template("feedback.html", token=token, question=question.as_dict())
 
-        
-	
+
 @app.route('/admin/poll', methods=['GET'])
 @login_required
 def poll():
     questions = Question.query.filter_by(user=current_user.id).order_by('-is_active')
     data = {'questions': [q.as_dict() for q in questions]}
-    data['hash']=json.dumps(data).encode('base64')
+    data['hash'] = json.dumps(data).encode('base64')
     return json.dumps(data)
 
-	
+
 @app.route('/admin/questions', methods=['GET', 'POST', 'UPDATE'])
 @login_required
 def questions():
@@ -245,7 +237,7 @@ def questions():
 
         if 'active' in data and data['active']:
             question.set_active()
-        #return json.dumps(question.as_dict())
+            # return json.dumps(question.as_dict())
 
     questions = Question.query.filter_by(user=current_user.id)
 
@@ -261,13 +253,13 @@ def home():
         #   session['feedback_completed'] = False
 
     return render_template("index.html", session=session)
-    
+
+
 @app.route('/admin/settings', methods=['GET', 'POST'])
 def settings():
     if request.method == "GET":
         return render_template("admin/settings.html", domain=urlparse(request.environ['HTTP_REFERER']).netloc)
-        
-   
+
 
 @app.route("/logout")
 @login_required
@@ -275,7 +267,7 @@ def logout():
     logout_user()
     return redirect('/')
 
-    
+
 @app.route('/signin', methods=['GET', 'POST'])
 def signin():
     form = SigninForm()
@@ -288,12 +280,11 @@ def signin():
                 login_user(user)
                 return redirect("/admin")
             else:
-                return render_template('signin.html', form=form, error=(("Login Error", ("Invalid email and password combination",)),))
+                return render_template('signin.html', form=form,
+                                       error=(("Login Error", ("Invalid email and password combination",)),))
         else:
             return render_template('signin.html', form=form, error=form.errors.items())
-        
-	
-    
+
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
@@ -328,4 +319,4 @@ def init_db():
 
 if __name__ == '__main__':
     init_db()
-    app.run(debug=True,threaded=True)
+    app.run(debug=True, threaded=True)

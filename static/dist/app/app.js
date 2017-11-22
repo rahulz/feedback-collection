@@ -1,5 +1,5 @@
 // app.js
-var fcsApp = angular.module('fcsApp', ['ui.router', 'ui.bootstrap','angular-confirm','ui.grid','chart.js']);
+var fcsApp = angular.module('fcsApp', ['ui.router', 'ui.bootstrap', 'angular-confirm', 'ui.grid', 'chart.js']);
 
 fcsApp.config(function ($stateProvider, $urlRouterProvider) {
 
@@ -18,10 +18,10 @@ fcsApp.config(function ($stateProvider, $urlRouterProvider) {
             controller: 'QuestionsController'
         })
 
-        
+
         .state('settings', {
             url: '/settings',
-            templateUrl: 'admin/settings',  
+            templateUrl: 'admin/settings',
             controller: 'SettingsController'
         });
 

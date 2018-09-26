@@ -1,8 +1,10 @@
 import json
 import pdb
 import uuid
+import base64
 from datetime import datetime
-from urlparse import urlparse
+from urllib.parse import urlparse
+
 from flask import Flask, render_template, request, session, redirect
 from flask_login import LoginManager, login_user, login_required, current_user, logout_user
 from flask_sqlalchemy import SQLAlchemy
@@ -217,7 +219,7 @@ def feedback():
 def poll():
     questions = Question.query.filter_by(user=current_user.id).order_by('-is_active')
     data = {'questions': [q.as_dict() for q in questions]}
-    data['hash'] = json.dumps(data).encode('base64')
+    data['hash'] = str(base64.b64encode(bytes(json.dumps(data), 'utf-8')))
     return json.dumps(data)
 
 
